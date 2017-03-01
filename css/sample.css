@@ -1,0 +1,14 @@
+.error {color:red;}
+
+.ui-inputtext {
+    width: 80px;
+}
+
+.ui-g {
+    background-color: #ededed;
+    border: 1px solid #aaa;
+}
+
+.ui-tree {
+    width: auto;
+}

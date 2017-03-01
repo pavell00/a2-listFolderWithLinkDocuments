@@ -1,0 +1,39 @@
+<ul class="items">
+    <li *ngFor="let folder of folders" (click)="onSelectFolder(folder)" 
+        [class.selected]="folder === selectedFolder" (dblclick)="onDblClick(folder)">
+        <span *ngIf="folder.isChildren" [ngClass]="'isChild'"> {{folder.name}}</span>
+        <span *ngIf="!folder.isChildren" [ngClass]="'noChild'"> {{folder.name}}</span>
+
+    </li>
+</ul>
+{{error}}
+<!--<li [ngSwitch]="folders">
+  <template [ngSwitchCase]="'folder 1'">Selected Project</template>
+  <template [ngSwitchCase]="'Tooling'">Selected Tooling</template>
+  <template ngSwitchDefault>Or else...</template>
+</li>
+<div [ngSwitch]="error">
+  <li *ngSwitchCase="'Project'">Selected Project</li>
+  <li *ngSwitchCase="'Tooling'">Selected Tooling</li>
+  <li *ngSwitchDefault>Or else...</li>
+</div>-->
+<!--<ul>
+            <div ngSwith="folders">
+           <div *ngSwitchCase="folder.isChildren"  style="color:red">{{folder.name}}</div>
+            <div *ngSwitchCase="folder.isChildren">{{folder.name}}</div>
+        </div>
+        
+
+            <div *ngIf="folder.isChildren" style="color:red">
+            <ul>
+                <li>sub_folder</li>
+            </ul>
+            </div>
+    <li>tets</li>
+    <li>tets 2
+        <ul>
+            <li>tets Q</li>
+            <li>tets W</li>
+        </ul>
+    </li>
+</ul>-->

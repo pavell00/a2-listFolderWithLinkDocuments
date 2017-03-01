@@ -1,0 +1,24 @@
+<p-dataTable [value]="docs" selectionMode="single" 
+             [(selection)]="selectedRow" 
+             (onRowSelect)="onRowSelect($event)" 
+             (onRowDblclick)="dialog.onOpenDlg()"
+             [paginator]="true" rows="15" 
+             [responsive]="true">
+    <p-header>Содержимое папки</p-header>
+    <p-column field="dateItem" header="Дата" [sortable]="true"></p-column>
+    <p-column field="docName" header="Наименование" [sortable]="true"></p-column>
+    <p-column field="id" header="id" [sortable]="true"></p-column>
+    <p-footer>
+        <div class="ui-helper-clearfix" style="width:100%">
+            <button type="button" pButton icon="fa-plus" style="float:left" 
+                (click)="dialog.onOpenDlgNew()" label="Add"></button>
+            <button type="button" pButton icon="fa-trash" style="float:left" 
+                (click)="onDeleteDoc($event)" label="Delete" class="ui-button-danger"></button>
+        </div>
+    </p-footer>
+</p-dataTable>
+
+<!--<button (click)="dialog.setDialog()">Stop</button>-->
+<!--<button (click)="dialog.onInit(true)">Stop</button>-->
+<editDialog #dialog [document]="document"></editDialog>
+<!--<editDialog [document]="document" [documentIsNew]="documentIsNew"></editDialog>-->

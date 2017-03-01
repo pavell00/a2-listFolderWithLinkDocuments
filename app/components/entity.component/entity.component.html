@@ -1,0 +1,7 @@
+<p-autoComplete [(ngModel)]="val" [suggestions]="results" 
+    (completeMethod)="search($event)" field="name"
+    [inputStyle]="{'width':'155px'}" (onSelect)="getData($event)">
+</p-autoComplete>    
+<span style="margin-left:20px">Value: {{val ? val.name||value : 'none'}}</span>
+
+

@@ -1,0 +1,18 @@
+<!--<ul class="itemjournal">
+    <li *ngFor="let jrn of journals" 
+            [class.selected]="doc === selectedDocument">
+        <span>{{jrn.docId}} -- {{jrn.jid}} -- {{jrn.entName}} 
+            -- {{jrn.qty}} -- {{jrn.prc}} -- {{jrn.sum}}</span>
+    </li>
+</ul>-->
+<p-dataTable [value]="journals" selectionMode="single" 
+        [(selection)]="selectedRow" (onRowSelect)="onRowSelect($event)" 
+        [paginator]="true" rows="15" [responsive]="true">
+    <p-header>Содержимое документа</p-header>
+    <p-column field="docId" header="DocId" [sortable]="true"></p-column>
+    <p-column field="jid" header="jid" [sortable]="true"></p-column>
+    <p-column field="entName" header="Name" [sortable]="true"></p-column>
+    <p-column field="qty" header="Quatity" [sortable]="true"></p-column>
+    <p-column field="prc" header="Price" [sortable]="true"></p-column>
+    <p-column field="sum" header="Sum" [sortable]="true"></p-column>
+</p-dataTable>

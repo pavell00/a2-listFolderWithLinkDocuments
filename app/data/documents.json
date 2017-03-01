@@ -1,0 +1,9 @@
+{
+    "data":
+        [
+          {"fldId":1, "id":1, "name":"document 1", "dateItem":"01-01-2017"},
+          {"fldId":2, "id":1, "name":"document 2", "dateItem":"02-01-2017"},
+          {"fldId":3, "id":1, "name":"document 3", "dateItem":"03-01-2017"},
+          {"fldId":3, "id":1, "name":"document 4", "dateItem":"03-01-2017"}
+        ]
+}

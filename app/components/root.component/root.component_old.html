@@ -1,0 +1,25 @@
+<h1>{{name}} CRUD</h1>
+<h3>Папки приложения</h3>  
+<ul class="items">
+<li *ngFor="let folder of folders" (click)="onSelectFolder(folder)" 
+        [class.selected]="folder === selectedFolder">
+    <span> {{folder.name}}</span>
+    </li>
+</ul>
+<div *ngIf="selectedFolder">
+<h3>Документы в папке {{selectedFolder.name}} </h3>  
+</div>
+<ul class="docs">
+<li *ngFor="let doc of docs" (click)="onSelectDocument(doc)"
+        [class.selected]="doc === selectedDocument">
+    <span>{{doc.dateItem}} -- {{doc.name}} -- {{doc.id}}</span>
+    </li>
+</ul>
+<button (click)="test_search()">Test search</button>
+<button (click)="test_searchObservable()">Test search Observable</button>
+<div><span> {{test}}</span></div>
+<br />
+<h3>Input date</h3>
+<p-calendar [(ngModel)]="dateValue" (onSelect)="onSelectDate(dateValue)"
+    dateFormat="dd.mm.yy" [showIcon]="true" >
+</p-calendar>
