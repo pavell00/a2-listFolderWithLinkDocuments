@@ -110,14 +110,13 @@ export class AppService {
       return a;
   }
 
-  searchFolderObserver ():Observable<Folder[]> {
-      console.log(this.currentFolder);
+  searchFolderObserver (f: string):Observable<Folder[]> {
+      //console.log(this.currentFolder);
       let params = new URLSearchParams();
-      params.set('rootId', this.currentFolder);
-      let a = this.http
+      params.set('rootId', f);
+      return this.http
         .get(this.foldersUrl, { search: params })
         .map(response => <Folder[]> response.json().data)
-      return a;
   }
 
   searchDocs4 () {

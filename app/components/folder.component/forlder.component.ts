@@ -27,11 +27,12 @@ export class FolderComponent implements OnInit {
             .catch(error => this.error = error);
         */
         //Initilize start folder ???
-       this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
+       this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});
+       /*this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
        this.appService.setFolder("1");
        this.appService.getFolders().subscribe(
             (val) => {this.folders = val})
-       this.appService.searchFolder();
+       this.appService.searchFolder();*/
     }
 
     onSelectFolder(folder :Folder){
@@ -47,8 +48,15 @@ export class FolderComponent implements OnInit {
         //this.appService.searchFolder();
         //this.appService.setFolder(String(folder.id));
         if (folder.isChildren) {
-            this.appService.setCurrentFolderObserver(String(folder.id));
-            this.appService.searchFolder();            
+            //this.appService.setCurrentFolderObserver(String(folder.id));
+            //this.appService.searchFolder();
+            this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
         }
+    }
+
+    backFolder(){
+        //this.appService.setCurrentFolderObserver("0");
+        //this.appService.searchFolder();
+        this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});
     }
 }

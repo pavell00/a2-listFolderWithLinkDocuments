@@ -36,9 +36,4 @@ export class RootComponent implements OnInit {
         this.appService.searchFolder();
         //console.log(JSON.stringify(this.appService.getFolders()));
     }
-
-    backFolder(){
-        this.appService.setCurrentFolderObserver("0");
-        this.appService.searchFolder();
-    }
 }
