@@ -32,11 +32,11 @@ export class AppData implements InMemoryDbService {
           {"docId":8, "jid":17, "entName":"entity 8", "qty": 5, "prc": 3.8, "sum": 7.2}
     ];
     let documents = [
-          {"fldId":1, "id":1, "docName":"document 1", "dateItem": "07.03.2017"},
-          {"fldId":1, "id":5, "docName":"document 5", "dateItem": "07.03.2017"},
-          {"fldId":1, "id":6, "docName":"document 6", "dateItem": "07.03.2017"},
-          {"fldId":2, "id":2, "docName":"document 2", "dateItem": "07.03.2017"},
-          {"fldId":2, "id":7, "docName":"document 7", "dateItem": "07.03.2017"},
+          {"fldId":1, "id":1, "docName":"document 1", "dateItem": "09.03.2017"},
+          {"fldId":1, "id":5, "docName":"document 5", "dateItem": "09.03.2017"},
+          {"fldId":1, "id":6, "docName":"document 6", "dateItem": "09.03.2017"},
+          {"fldId":2, "id":2, "docName":"document 2", "dateItem": "09.03.2017"},
+          {"fldId":2, "id":7, "docName":"document 7", "dateItem": "09.03.2017"},
           {"fldId":3, "id":3, "docName":"document 3", "dateItem": "03.03.2017"},
           {"fldId":3, "id":8, "docName":"document 8", "dateItem": "20.03.2017"},
           {"fldId":4, "id":4, "docName":"document 4", "dateItem": "07.03.2017"},
