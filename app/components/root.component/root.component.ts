@@ -14,7 +14,7 @@ export class RootComponent implements OnInit {
     sDate: string;
     checked: boolean = true;
     error: any;
-    bCramb: BreadCramber[];
+    bCramb: BreadCramber[] = [];
 
     constructor(private appService: AppService){ }
 
@@ -32,7 +32,7 @@ export class RootComponent implements OnInit {
         let a = new BreadCramber(0, "cramber_1");
         let b = new BreadCramber(1, "cramber_2");
         this.bCramb.push(a);
-        //this.bCramb.push(b);
+        this.bCramb.push(b);
         this.appService.setBCramberObserver(this.bCramb);
     }
 }

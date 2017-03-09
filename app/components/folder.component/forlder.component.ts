@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Folder } from '../../model/folder';
 import { CalendarComponent }  from '../calendar.component/calendar.component';
-import {AppService} from '../../services/app.service';
+import { BreadCramber } from '../../model/breadcramber'
+import { AppService } from '../../services/app.service';
 
 @Component({
     moduleId: module.id,
@@ -54,6 +55,7 @@ export class FolderComponent implements OnInit {
             //this.appService.setCurrentFolderObserver(String(folder.id));
             //this.appService.searchFolder();
             this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
+            this.appService.setBCramberObserver([new BreadCramber(folder.id, folder.name)]);
         }
     }
 

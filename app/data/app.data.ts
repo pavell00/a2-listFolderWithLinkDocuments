@@ -46,8 +46,9 @@ export class AppData implements InMemoryDbService {
           {"id": 1, "name": "folder 1", "isChildren": true, "rootId":0},
           {"id": 2, "name": "folder 2", "isChildren": false, "rootId":0},
           {"id": 3, "name": "folder 3", "isChildren": true, "rootId":0},
-          {"id": 4, "name": "folder 1_1", "isChildren": false, "rootId":1},
+          {"id": 4, "name": "folder 1_1", "isChildren": true, "rootId":1},
           {"id": 5, "name": "folder 1_2", "isChildren": false, "rootId":1},
+          {"id": 9, "name": "folder 1_1_1", "isChildren": false, "rootId":5},
           {"id": 6, "name": "folder 3_1", "isChildren": false, "rootId":3},
           {"id": 7, "name": "folder 3_2", "isChildren": false, "rootId":3},
           {"id": 8, "name": "folder 4", "isChildren": false, "rootId":0}
