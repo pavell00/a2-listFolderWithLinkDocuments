@@ -27,10 +27,13 @@ export class FolderComponent implements OnInit {
             .catch(error => this.error = error);
         */
         //Initilize start folder ???
-       this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});
-       /*this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
-       this.appService.setFolder("1");
-       this.appService.getFolders().subscribe(
+       this.appService.searchFolderObserver("0")
+            .subscribe((val) => {this.folders = val});
+       //this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
+        //console.log(this.folders.entries());
+       //let f = new Folder(this.folders[0].id, this.folders[0].name, this.folders[0].isChildren, this.folders[0].rootId);
+       //this.appService.setFolder("1");
+       /*this.appService.getFolders().subscribe(
             (val) => {this.folders = val})
        this.appService.searchFolder();*/
     }

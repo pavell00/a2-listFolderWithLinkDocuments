@@ -25,15 +25,4 @@ export class RootComponent implements OnInit {
         this.appService.getFolders().subscribe(
             (val) => {this.error = JSON.stringify(val)})
     }
-
-    addFolder(){
-        let f = new Folder();
-        f.id = 100;
-        f.name = "addedFolder";
-        f.isChildren = false;
-        f.rootId = 0;
-        this.appService.saveFolderPromise(f);
-        this.appService.searchFolder();
-        //console.log(JSON.stringify(this.appService.getFolders()));
-    }
 }
