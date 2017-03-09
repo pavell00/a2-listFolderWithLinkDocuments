@@ -15,6 +15,7 @@ import {Folder} from '../model/folder'
 import {Document} from '../model/document'
 import {Journal} from '../model/journal'
 import {Entity} from '../model/entity'
+import {BreadCramber} from '../model/breadcramber'
 import {CalendarComponent} from '../components/calendar.component/calendar.component'
 import {FolderComponent} from '../components/folder.component/forlder.component'
 
@@ -33,6 +34,9 @@ export class AppService {
   
   private calendarSource: Subject<string> = new Subject<string>();
   calendarChange$ = this.calendarSource.asObservable();
+
+  private bcramberSource: Subject<BreadCramber[]> = new Subject<BreadCramber[]>();
+  bcramberChange$ = this.bcramberSource.asObservable();
 
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
@@ -86,7 +90,8 @@ export class AppService {
   getJournals(){return this.journals;}
 
   setCalendarObserver(s: string){this.calendarSource.next(s);}
-  setCurrentFolderObserver(s: string){this.currentFolder = s;}
+  setBCramberObserver(s: BreadCramber[]){this.bcramberSource.next(s);}
+  //setCurrentFolderObserver(s: string){this.currentFolder = s;}
 
   getFolders_old() : Promise<Folder[]> {
       return this.http.get('app/folders')

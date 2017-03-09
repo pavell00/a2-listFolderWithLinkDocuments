@@ -17,6 +17,7 @@ import { JournalComponent }  from './components/journal.component/journal.compon
 import { CalendarComponent }  from './components/calendar.component/calendar.component';
 import { EntityComponent }  from './components/entity.component/entity.component';
 import { EditDialogComponent } from './components/edit.dialog.component/edit.dialog.component';
+import { BreadCramberComponent } from './components/breadcramber.component/breadcramber.component';
 import { AppService } from './services/app.service';
 
 @NgModule({
@@ -31,7 +32,7 @@ import { AppService } from './services/app.service';
   declarations: [ RootComponent, JournalComponent, 
                   DocumentComponent, FolderComponent,
                   CalendarComponent, EntityComponent,
-                  EditDialogComponent ],
+                  EditDialogComponent, BreadCramberComponent ],
   providers:    [ AppService ],
   bootstrap:    [ RootComponent ]
 })

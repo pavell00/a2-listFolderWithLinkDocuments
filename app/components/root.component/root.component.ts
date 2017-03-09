@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AppService} from '../../services/app.service';
-import {Folder} from '../../model/folder'
+import {BreadCramber} from '../../model/breadcramber'
 
 @Component({
   moduleId: module.id,
@@ -14,6 +14,7 @@ export class RootComponent implements OnInit {
     sDate: string;
     checked: boolean = true;
     error: any;
+    bCramb: BreadCramber[];
 
     constructor(private appService: AppService){ }
 
@@ -21,8 +22,17 @@ export class RootComponent implements OnInit {
         this.appService.calendarChange$.subscribe(
             (v) => {this.sDate = v}
         )
+        
+        this.appService.bcramberChange$.subscribe(
+            (v) => {this.error = v}
+        )
+    }
 
-        this.appService.getFolders().subscribe(
-            (val) => {this.error = JSON.stringify(val)})
+    addValue(){
+        let a = new BreadCramber(0, "cramber_1");
+        let b = new BreadCramber(1, "cramber_2");
+        this.bCramb.push(a);
+        //this.bCramb.push(b);
+        this.appService.setBCramberObserver(this.bCramb);
     }
 }
