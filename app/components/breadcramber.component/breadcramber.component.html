@@ -1,6 +1,6 @@
 <div class="bcramb">
     <ul>
-        <li *ngFor="let bcramb of bcrambList" (click)="onSelectBCramb($event)">
+        <li *ngFor="let bcramb of bcrambList" (click)="onSelectBCramb(bcramb)">
         {{bcramb.name}} /
         </li>
     </ul>    

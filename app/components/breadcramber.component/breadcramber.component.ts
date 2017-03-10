@@ -24,7 +24,7 @@ export class BreadCramberComponent implements OnInit {
         this.bcrambList = this.appService.getBCramber();
     }
 
-    onSelectBCramb(event: any){
-        console.log(event.data)
+    onSelectBCramb(bcramb: BreadCramber){
+        console.log(JSON.stringify(bcramb));
     }
 }
