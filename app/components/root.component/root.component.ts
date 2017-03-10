@@ -11,11 +11,12 @@ import {BreadCramber} from '../../model/breadcramber'
 
 export class RootComponent implements OnInit { 
 
-    name = 'Angular'; 
+    name = 'Angular CRUD'; 
     sDate: string;
     checked: boolean = true;
     error: any;
     bCramb: BreadCramber[] = [];
+    
 
     constructor(private appService: AppService){ }
 
@@ -23,10 +24,6 @@ export class RootComponent implements OnInit {
         this.appService.calendarChange$.subscribe(
             (v) => {this.sDate = v}
         )
-        
-        /*this.appService.bcramberChange$.subscribe(
-            (v) => {this.error = v}
-        )*/
     }
 
     /*addValue(){

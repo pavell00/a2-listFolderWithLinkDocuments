@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Folder } from '../../model/folder';
 import { CalendarComponent }  from '../calendar.component/calendar.component';
@@ -14,7 +14,7 @@ export class FolderComponent implements OnInit {
 
     private dateValue: Date;
     private selectedFolder: Folder;
-    private folders: Folder[];
+    @Input()folders: Folder[];
     private error: any;
 
     constructor(private appService: AppService) { }

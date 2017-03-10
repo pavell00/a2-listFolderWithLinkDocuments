@@ -25,6 +25,8 @@ export class BreadCramberComponent implements OnInit {
     }
 
     onSelectBCramb(bcramb: BreadCramber){
-        console.log(JSON.stringify(bcramb));
+        //console.log(JSON.stringify(bcramb));
+        this.appService.searchFolderObserver(String(bcramb.id));
+       
     }
 }
