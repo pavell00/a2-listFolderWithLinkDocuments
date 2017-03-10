@@ -7,9 +7,9 @@ import {AppService} from '../../services/app.service';
 @Component({
     moduleId: module.id,
     selector: 'entity',
-    templateUrl: 'entity.component.html'
+    templateUrl: 'autocomplit.entity.component.html'
 })
-export class EntityComponent implements OnInit {
+export class AutoComplitEntityComponent implements OnInit {
 
     val: Entity;
     results: Entity[];

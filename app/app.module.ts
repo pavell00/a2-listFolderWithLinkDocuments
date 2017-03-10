@@ -15,23 +15,23 @@ import { FolderComponent }  from './components/folder.component/forlder.componen
 import { DocumentComponent }  from './components/document.component/document.component';
 import { JournalComponent }  from './components/journal.component/journal.component';
 import { CalendarComponent }  from './components/calendar.component/calendar.component';
-import { EntityComponent }  from './components/entity.component/entity.component';
+import { AutoComplitEntityComponent }  from './components/autocomplit.entity.component/autocomplit.entity.component';
 import { EditDialogComponent } from './components/edit.dialog.component/edit.dialog.component';
 import { BreadCramberComponent } from './components/breadcramber.component/breadcramber.component';
 import { AppService } from './services/app.service';
 
 @NgModule({
-  imports:      [ BrowserModule, 
-                  HttpModule, 
+  imports:      [ BrowserModule,
+                  HttpModule,
                   FormsModule,
                   JsonpModule,
                   CalendarModule, DataTableModule, AutoCompleteModule,
                   ToolbarModule, SplitButtonModule, DialogModule,
                   InputSwitchModule,
                   InMemoryWebApiModule.forRoot(AppData)],
-  declarations: [ RootComponent, JournalComponent, 
+  declarations: [ RootComponent, JournalComponent,
                   DocumentComponent, FolderComponent,
-                  CalendarComponent, EntityComponent,
+                  CalendarComponent, AutoComplitEntityComponent,
                   EditDialogComponent, BreadCramberComponent ],
   providers:    [ AppService ],
   bootstrap:    [ RootComponent ]
