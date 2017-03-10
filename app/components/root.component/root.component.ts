@@ -5,7 +5,8 @@ import {BreadCramber} from '../../model/breadcramber'
 @Component({
   moduleId: module.id,
   selector: 'my-app',
-  templateUrl: 'root.component.html'
+  templateUrl: 'root.component.html',
+  styleUrls:  ['root.component.css'],
 })
 
 export class RootComponent implements OnInit { 
@@ -23,16 +24,16 @@ export class RootComponent implements OnInit {
             (v) => {this.sDate = v}
         )
         
-        this.appService.bcramberChange$.subscribe(
+        /*this.appService.bcramberChange$.subscribe(
             (v) => {this.error = v}
-        )
+        )*/
     }
 
-    addValue(){
+    /*addValue(){
         let a = new BreadCramber(0, "cramber_1");
         let b = new BreadCramber(1, "cramber_2");
         this.bCramb.push(a);
         this.bCramb.push(b);
         this.appService.setBCramberObserver(this.bCramb);
-    }
+    }*/
 }

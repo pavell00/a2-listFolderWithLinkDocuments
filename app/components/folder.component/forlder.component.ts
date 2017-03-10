@@ -55,7 +55,7 @@ export class FolderComponent implements OnInit {
             //this.appService.setCurrentFolderObserver(String(folder.id));
             //this.appService.searchFolder();
             this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
-            this.appService.setBCramberObserver([new BreadCramber(folder.id, folder.name)]);
+            this.appService.setBCramber(new BreadCramber(folder.id, folder.name));
         }
     }
 

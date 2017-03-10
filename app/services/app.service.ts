@@ -35,8 +35,7 @@ export class AppService {
   private calendarSource: Subject<string> = new Subject<string>();
   calendarChange$ = this.calendarSource.asObservable();
 
-  private bcramberSource: Subject<BreadCramber[]> = new Subject<BreadCramber[]>();
-  bcramberChange$ = this.bcramberSource.asObservable();
+  private bcramberSource: BreadCramber[] = [];
 
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
@@ -53,7 +52,14 @@ export class AppService {
   setCalendar(s: string){this.calendar = s;}
   getDocs()   {return this.docs;}
   getFolders(){return this.folders;}
-   
+  getJournals(){return this.journals;}
+
+  setCalendarObserver(s: string){this.calendarSource.next(s);}
+
+  setBCramber(s: BreadCramber){this.bcramberSource.push(s);}
+  getBCramber(){return this.bcramberSource;}
+  //setCurrentFolderObserver(s: string){this.currentFolder = s;}
+
   saveDocPromise(d: Document){
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
@@ -86,12 +92,6 @@ export class AppService {
         .catch(this.handleError)
       this.searchDocs4();
   }
-
-  getJournals(){return this.journals;}
-
-  setCalendarObserver(s: string){this.calendarSource.next(s);}
-  setBCramberObserver(s: BreadCramber[]){this.bcramberSource.next(s);}
-  //setCurrentFolderObserver(s: string){this.currentFolder = s;}
 
   getFolders_old() : Promise<Folder[]> {
       return this.http.get('app/folders')

@@ -1,4 +1,6 @@
-<h3>Input date</h3>
-<p-calendar [(ngModel)]="dateValue" (onSelect)="onSelectDate(dateValue)"
-    dateFormat="dd.mm.yy" [showIcon]="true" >
-</p-calendar>
+<div class="calendar">
+    <p>Выбор даты</p>
+    <p-calendar [(ngModel)]="dateValue" (onSelect)="onSelectDate(dateValue)"
+        dateFormat="dd.mm.yy" [showIcon]="true" >
+    </p-calendar>    
+</div>

@@ -6,7 +6,9 @@ import { BreadCramber } from '../../model/breadcramber';
 @Component({
     moduleId: module.id,
     selector: 'breadcramber',
-    templateUrl: 'breadcramber.component.html'
+    templateUrl: 'breadcramber.component.html',
+    styleUrls:  ['breadcramber.component.css'],
+
 })
 
 export class BreadCramberComponent implements OnInit {
@@ -16,9 +18,10 @@ export class BreadCramberComponent implements OnInit {
     constructor(private appService: AppService) { }
 
     ngOnInit() {
-        this.appService.bcramberChange$.subscribe(
+        /*this.appService.bcramberChange$.subscribe(
             (v) => {this.bcrambList = v}
-        )
+        )*/
+        this.bcrambList = this.appService.getBCramber();
     }
 
     onSelectBCramb(event: any){

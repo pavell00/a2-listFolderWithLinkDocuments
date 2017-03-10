@@ -1,22 +1,14 @@
 
 <h2>{{name}} CRUD</h2>
-<breadcramber></breadcramber>
 {{sDate}}
-<!--<button (click)="test_search()">Test search docs</button>
-<button (click)="test_searchObservable()">Test search Observable</button>
-<button (click)="test_searchJrn()">Test search journs</button>
-<div><span> {{test}}</span></div>-->
 <br />
-<div>
-     <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+<div class="my-flex-container">
+    <p-inputSwitch [(ngModel)]="checked" ></p-inputSwitch>
+    <calendar></calendar>
+    <breadcramber></breadcramber>
 </div>
-<calendar></calendar>
+
 <div class="ui-g" align="center" *ngIf="checked">
-    <!--<div class="ui-g-2 ui-md-2 ui-lg-2">Папки приложения</div>
-    <div class="ui-g-4 ui-md-4 ui-lg-4">Документы в папке 
-        <div *ngIf="selectedFolder">{{selectedFolder.name}}</div>
-    </div>
-    <div class="ui-g-6 ui-md-6 ui-lg-6"></div>-->
     <div class="ui-g-2 ui-md-2 ui-lg-2">
         <folder></folder>
     </div>
@@ -40,5 +32,6 @@
 <div>
     <entity></entity>    
 </div>
-<button type="button" (click)="addValue()">AddValue</button>
+<!--<button type="button" (click)="addValue()">AddValue</button>
 {{error}}
+-->

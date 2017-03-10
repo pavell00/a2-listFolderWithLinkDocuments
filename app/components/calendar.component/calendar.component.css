@@ -1,0 +1,10 @@
+.calendar{
+    display: inline-flex;
+    align-items: center;
+}
+
+p {
+    /*align-items: center;*/
+    /*margin-top: 0;*/
+    padding-left: 20px;
+}
