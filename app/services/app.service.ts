@@ -119,8 +119,8 @@ export class AppService {
   }
 
   searchDocs4 () {
-      let term = (this.folder);
-      let currentDate = (this.calendar);
+      let term = this.folder;
+      let currentDate = this.calendar;
       let params = new URLSearchParams();
       params.set('fldId', term);
       params.set('dateItem', currentDate);
