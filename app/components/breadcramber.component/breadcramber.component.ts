@@ -18,15 +18,19 @@ export class BreadCramberComponent implements OnInit {
     constructor(private appService: AppService) { }
 
     ngOnInit() {
-        /*this.appService.bcramberChange$.subscribe(
+        this.appService.bcramberChange$.subscribe(
             (v) => {this.bcrambList = v}
-        )*/
-        this.bcrambList = this.appService.getBCramber();
+        )
     }
 
-    onSelectBCramb(bcramb: BreadCramber){
-        //console.log(JSON.stringify(bcramb));
+    onClickBCramb(bcramb: BreadCramber){
+        //removing selected item from bcramb array
+        let index: number = this.bcrambList.indexOf(bcramb, 0);
+        let size: number = this.bcrambList.length;
+        if (index > -1) {
+            this.bcrambList.splice(index, size);
+        }
+        //this.appService.setBCramberObserver(this.bcrambFolders);
         this.appService.searchFolderObserver(String(bcramb.id));
-       
     }
 }

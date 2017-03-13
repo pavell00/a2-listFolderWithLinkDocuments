@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Subject} from 'rxjs/Subject';
-import {} from 'rxjs'
+//import {} from 'rxjs';
 
 import {Folder} from '../model/folder'
 import {Document} from '../model/document'
@@ -35,7 +35,8 @@ export class AppService {
   private calendarSource: Subject<string> = new Subject<string>();
   calendarChange$ = this.calendarSource.asObservable();
 
-  private bcramberSource: BreadCramber[] = [];
+  private bcramberSource: Subject<BreadCramber[]> = new Subject<BreadCramber[]>();
+  bcramberChange$ = this.bcramberSource.asObservable();
 
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
@@ -45,8 +46,7 @@ export class AppService {
   private journalsUrl = 'app/journals';  // URL to web API
   private entitiesUrl = 'app/entities';  // URL to web API
   
-  constructor(private http: Http, 
-              private jsonp: Jsonp) { }
+  constructor(private http: Http, private jsonp: Jsonp) {}
   
   setFolder(s: string){this.folder = s;}
   setCalendar(s: string){this.calendar = s;}
@@ -55,9 +55,10 @@ export class AppService {
   getJournals(){return this.journals;}
 
   setCalendarObserver(s: string){this.calendarSource.next(s);}
-
-  setBCramber(s: BreadCramber){this.bcramberSource.push(s);}
-  getBCramber(){return this.bcramberSource;}
+  setBCramberObserver(b: BreadCramber[]){this.bcramberSource.next(b);}
+  
+  //setBCramber(s: BreadCramber){this.bcramberSource.push(s);}
+  //getBCramber(){return this.bcramberSource;}
   //setCurrentFolderObserver(s: string){this.currentFolder = s;}
 
   saveDocPromise(d: Document){
@@ -91,13 +92,6 @@ export class AppService {
         .then(response => response.json())
         .catch(this.handleError)
       this.searchDocs4();
-  }
-
-  getFolders_old() : Promise<Folder[]> {
-      return this.http.get('app/folders')
-        .toPromise()
-        .then(response => response.json().data)
-        .catch(this.handleError);
   }
 
   searchFolder () {
@@ -186,6 +180,7 @@ export class AppService {
   }
 
 //------------------------ EXample --------------
+
   saveFolderPromise(f: Folder){
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });

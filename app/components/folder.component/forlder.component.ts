@@ -12,15 +12,14 @@ import { AppService } from '../../services/app.service';
 })
 export class FolderComponent implements OnInit {
 
-    private dateValue: Date;
     private selectedFolder: Folder;
-    @Input()folders: Folder[];
+    private folders: Folder[];
     private error: any;
+    private bcrambFolders: BreadCramber[] = [];
 
     constructor(private appService: AppService) { }
 
     ngOnInit() {
-        this.dateValue = new Date();
         //this.appService.setCurrentFolderObserver("0");
         /*let a = this.appService
             .getFolders()
@@ -31,7 +30,6 @@ export class FolderComponent implements OnInit {
        this.appService.searchFolderObserver("0")
             .subscribe((val) => {this.folders = val});
        //this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
-        //console.log(this.folders.entries());
        //let f = new Folder(this.folders[0].id, this.folders[0].name, this.folders[0].isChildren, this.folders[0].rootId);
        //this.appService.setFolder("1");
        /*this.appService.getFolders().subscribe(
@@ -48,14 +46,14 @@ export class FolderComponent implements OnInit {
 
     onDblClick(folder :Folder){
         //this.appService.setCurrentFolderObserver(String(folder.id));
-        //this.appService.setCurrentFolderObserver(String(folder.id));
         //this.appService.searchFolder();
         //this.appService.setFolder(String(folder.id));
         if (folder.isChildren) {
-            //this.appService.setCurrentFolderObserver(String(folder.id));
             //this.appService.searchFolder();
             this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
-            this.appService.setBCramber(new BreadCramber(folder.id, folder.name));
+            //add items to BreadCramber Array
+            this.bcrambFolders.push(new BreadCramber(folder.id, folder.name));
+            this.appService.setBCramberObserver(this.bcrambFolders);
         }
     }
 
