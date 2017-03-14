@@ -14,6 +14,7 @@ import { BreadCramber } from '../../model/breadcramber';
 export class BreadCramberComponent implements OnInit {
 
     bcrambList: BreadCramber[];
+    error:any
 
     constructor(private appService: AppService) { }
 
@@ -30,7 +31,10 @@ export class BreadCramberComponent implements OnInit {
         if (index > -1) {
             this.bcrambList.splice(index, size);
         }
-        //this.appService.setBCramberObserver(this.bcrambFolders);
-        this.appService.searchFolderObserver(String(bcramb.id));
+        //this.appService.setCurfld(String(bcramb.rootId));
+        this.appService.setFolder(String(bcramb.rootId));
+        this.appService.searchFolder();
+        //console.log(String(bcramb.id));
+        //this.appService.searchFolderObserver("0").subscribe((val) => {this.error = val});;
     }
 }

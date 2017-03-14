@@ -1,9 +1,9 @@
 export class BreadCramber {
-    id: number;
+    rootId: number;
     name: string;
      
-    constructor(id: number, name: string){
-        this.id = id;
+    constructor(rootId: number, name: string){
+        this.rootId = rootId;
         this.name = name;
     }
 }

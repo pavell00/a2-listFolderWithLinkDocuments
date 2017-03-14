@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http, Response, 
          URLSearchParams, RequestOptions, Jsonp } from '@angular/http';
 
@@ -24,16 +24,14 @@ export class AppService {
 
   //rootFolder: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   //todo_2: BehaviorSubject<Folder[]> = new BehaviorSubject<Folder[]>([{id:1, name:'default Folder'}]);
-  private folder: string;
-  private calendar: string;
+  private currentFolderId: string;
   private currentFolder: string = "0";
-  private docs: Subject<Document[]> = new Subject<Document[]>();
-  private folders: Subject<Folder[]> = new Subject<Folder[]>();
-  private journals: Subject<Journal[]> = new Subject<Journal[]>();
-  private entities: Subject<Entity[]> = new Subject<Entity[]>();
-  
-  private calendarSource: Subject<string> = new Subject<string>();
-  calendarChange$ = this.calendarSource.asObservable();
+  private docs = new Subject<Document[]>();
+  private folders = new Subject<Folder[]>();
+  private journals = new Subject<Journal[]>();
+  private entities = new Subject<Entity[]>();
+  private calendar = new BehaviorSubject('NAN');
+  private curfld = new BehaviorSubject('0');
 
   private bcramberSource: Subject<BreadCramber[]> = new Subject<BreadCramber[]>();
   bcramberChange$ = this.bcramberSource.asObservable();
@@ -48,18 +46,20 @@ export class AppService {
   
   constructor(private http: Http, private jsonp: Jsonp) {}
   
-  setFolder(s: string){this.folder = s;}
-  setCalendar(s: string){this.calendar = s;}
+  setFolder(s: string){this.currentFolderId = s;}
+  //setCalendar(s: string){this.calendar = s;}
   getDocs()   {return this.docs;}
-  getFolders(){return this.folders;}
+
+  getFolders(): Observable<any> {return this.folders.asObservable();}
   getJournals(){return this.journals;}
 
-  setCalendarObserver(s: string){this.calendarSource.next(s);}
+  getCalendar() : Observable<any> {return this.calendar.asObservable();}
+  setCalendar(s: string){this.calendar.next(s);}
+
   setBCramberObserver(b: BreadCramber[]){this.bcramberSource.next(b);}
   
   //setBCramber(s: BreadCramber){this.bcramberSource.push(s);}
-  //getBCramber(){return this.bcramberSource;}
-  //setCurrentFolderObserver(s: string){this.currentFolder = s;}
+  getBCramber(){return this.bcramberSource;}
 
   saveDocPromise(d: Document){
       let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -97,7 +97,7 @@ export class AppService {
   searchFolder () {
       //console.log(this.currentFolder);
       let params = new URLSearchParams();
-      params.set('rootId', this.currentFolder);
+      params.set('rootId', this.currentFolderId);
       let a = this.http
         .get(this.foldersUrl, { search: params })
         .map(response => <Folder[]> response.json().data)
@@ -106,21 +106,12 @@ export class AppService {
                 },
                 (err) => (this.handleError)
             )
-      return a;
-  }
-
-  searchFolderObserver (f: string):Observable<Folder[]> {
-      //console.log(this.currentFolder);
-      let params = new URLSearchParams();
-      params.set('rootId', f);
-      return this.http
-        .get(this.foldersUrl, { search: params })
-        .map(response => <Folder[]> response.json().data)
+      //return a;
   }
 
   searchDocs4 () {
-      let term = this.folder;
-      let currentDate = this.calendar;
+      let term = this.currentFolderId;
+      let currentDate = this.calendar.getValue();//this.calendar;
       let params = new URLSearchParams();
       params.set('fldId', term);
       params.set('dateItem', currentDate);
@@ -180,6 +171,14 @@ export class AppService {
   }
 
 //------------------------ EXample --------------
+  searchFolderObserver (f: string):Observable<Folder[]> {
+      //console.log(this.currentFolder);
+      let params = new URLSearchParams();
+      params.set('rootId', f);
+      return this.http
+        .get(this.foldersUrl, { search: params })
+        .map(response => <Folder[]> response.json().data)
+  }
 
   saveFolderPromise(f: Folder){
       let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -228,8 +227,8 @@ export class AppService {
   }
 
   searchDocs3 () {
-      let term = (this.folder);
-      let currentDate = (this.calendar);
+      let term = (this.currentFolderId);
+      let currentDate = this.calendar.getValue();
       let params = new URLSearchParams();
       params.set('fldId', term);
 

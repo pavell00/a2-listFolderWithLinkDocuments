@@ -20,21 +20,13 @@ export class FolderComponent implements OnInit {
     constructor(private appService: AppService) { }
 
     ngOnInit() {
-        //this.appService.setCurrentFolderObserver("0");
-        /*let a = this.appService
-            .getFolders()
-            .then(folders => this.folders = folders)
-            .catch(error => this.error = error);
-        */
         //Initilize start folder ???
-       this.appService.searchFolderObserver("0")
+        this.appService.setFolder("0");
+        /*this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});*/
+        this.appService.searchFolder();
+        this.appService.getFolders()
             .subscribe((val) => {this.folders = val});
-       //this.onSelectFolder({"id": 1, "name": "folder 1", "isChildren": true, rootId:0});
-       //let f = new Folder(this.folders[0].id, this.folders[0].name, this.folders[0].isChildren, this.folders[0].rootId);
-       //this.appService.setFolder("1");
-       /*this.appService.getFolders().subscribe(
-            (val) => {this.folders = val})
-       this.appService.searchFolder();*/
+        //this.appService.getCurfld().subscribe((val) => {this.error = val});
     }
 
     onSelectFolder(folder :Folder){
@@ -45,21 +37,18 @@ export class FolderComponent implements OnInit {
     }
 
     onDblClick(folder :Folder){
-        //this.appService.setCurrentFolderObserver(String(folder.id));
-        //this.appService.searchFolder();
-        //this.appService.setFolder(String(folder.id));
         if (folder.isChildren) {
-            //this.appService.searchFolder();
-            this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
+            this.appService.setFolder(String(folder.id));
+            this.appService.searchFolder();
+            //this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
             //add items to BreadCramber Array
-            this.bcrambFolders.push(new BreadCramber(folder.id, folder.name));
+            this.bcrambFolders.push(new BreadCramber(folder.rootId, folder.name));
             this.appService.setBCramberObserver(this.bcrambFolders);
         }
     }
 
     backFolder(){
-        //this.appService.setCurrentFolderObserver("0");
         //this.appService.searchFolder();
-        this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});
+        //this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});
     }
 }

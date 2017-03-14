@@ -21,9 +21,9 @@ export class CalendarComponent implements OnInit {
     }
 
     onSelectDate(value: Date){
-      //this.appService.searchDocs(String(this.selectedFolder.id | 0), String(this.dateValue.toLocaleDateString()))
-      this.appService.setCalendar(String(this.dateValue.toLocaleDateString()));
-      this.appService.searchDocs4();
-      this.appService.setCalendarObserver(String(this.dateValue.toLocaleDateString()));
+        //this.appService.searchDocs(String(this.selectedFolder.id | 0), String(this.dateValue.toLocaleDateString()))
+        this.appService.setCalendar(String(this.dateValue.toLocaleDateString()));
+        this.appService.searchDocs4();
+
     }
 }
