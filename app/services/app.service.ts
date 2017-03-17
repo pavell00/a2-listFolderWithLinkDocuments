@@ -39,10 +39,10 @@ export class AppService {
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
 
-  private foldersUrl = 'app/folders';  // URL to web API
-  private docmentsUrl = 'app/documents';  // URL to web API
-  private journalsUrl = 'app/journals';  // URL to web API
-  private entitiesUrl = 'app/entities';  // URL to web API
+  private foldersUrl = 'http://172.16.9.2:3004/folders';  // URL to web API
+  private docmentsUrl = 'http://172.16.9.2:3004/documents';  // URL to web API
+  private journalsUrl = 'http://172.16.9.2:3004/journals';  // URL to web API
+  private entitiesUrl = 'http://172.16.9.2:3004/entities';  // URL to web API
   
   constructor(private http: Http, private jsonp: Jsonp) {}
   
