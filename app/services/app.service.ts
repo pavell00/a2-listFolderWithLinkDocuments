@@ -39,10 +39,10 @@ export class AppService {
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
 
-  private foldersUrl = 'http://172.16.9.2:3004/folders';  // URL to web API
-  private docmentsUrl = 'http://172.16.9.2:3004/documents';  // URL to web API
-  private journalsUrl = 'http://172.16.9.2:3004/journals';  // URL to web API
-  private entitiesUrl = 'http://172.16.9.2:3004/entities';  // URL to web API
+  private foldersUrl = 'http://192.168.0.101:3004/folders';  // URL to web API
+  private docmentsUrl = 'http://192.168.0.101:3004/documents';  // URL to web API
+  private journalsUrl = 'http://192.168.0.101:3004/journals';  // URL to web API
+  private entitiesUrl = 'http://192.168.0.101:3004/entities';  // URL to web API
   
   constructor(private http: Http, private jsonp: Jsonp) {}
   
@@ -66,7 +66,7 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     this.http.post(this.docmentsUrl, JSON.stringify(d), options)
         .toPromise()
-        .then(response => response.json().data)
+        .then(response => response.json())
         .catch(this.handleError)
     this.searchDocs4();
   }
@@ -100,7 +100,7 @@ export class AppService {
     params.set('rootId', this.currentFolderId);
     let a = this.http
         .get(this.foldersUrl, { search: params })
-        .map(response => <Folder[]> response.json().data)
+        .map(response => <Folder[]> response.json())
             a.subscribe(
                 (val) => {this.folders.next(val);
                 },
@@ -117,7 +117,7 @@ export class AppService {
      params.set('dateItem', currentDate);
      let a = this.http
         .get(this.docmentsUrl, { search: params })
-        .map(response => <Document[]> response.json().data)
+        .map(response => <Document[]> response.json())
             a.subscribe(
                 (val) => {this.docs.next(val);//without filtering
                 },
@@ -131,7 +131,7 @@ export class AppService {
     params.set('docId', term);
     let a = this.http
         .get(this.journalsUrl, { search: params })
-        .map(response => <Journal[]> response.json().data)
+        .map(response => <Journal[]> response.json())
             a.subscribe(
                 (val) => {this.journals.next(val);},//without filtering
                 (err) => (this.handleError)
@@ -144,7 +144,7 @@ export class AppService {
     params.set('name', term);
     let a = this.http
         .get(this.entitiesUrl, { search: params })
-        .map(response => <Entity[]> response.json().data)
+        .map(response => <Entity[]> response.json())
             a.subscribe(
                 (val) => {//this.entities.next(val);//without filtering
                     this.entities.next(
