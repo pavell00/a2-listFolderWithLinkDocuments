@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Folder } from '../../model/folder';
+import { Folder, BreadCramber } from '../../model/index';
 import { CalendarComponent }  from '../calendar.component/calendar.component';
-import { BreadCramber } from '../../model/breadcramber'
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class FolderComponent implements OnInit {
 
     ngOnInit() {
         //Initilize start folder ???
-        this.appService.setFolder("0");
+        this.appService.setCurrentFolder(new Folder(0, "", false, 0));
         /*this.appService.searchFolderObserver("0").subscribe((val) => {this.folders = val});*/
         this.appService.searchFolder();
         this.appService.getFolders()
@@ -32,13 +31,13 @@ export class FolderComponent implements OnInit {
     onSelectFolder(folder :Folder){
       this.selectedFolder = folder;
       //this.appService.searchDocs(String(folder.id), String(this.dateValue.toLocaleDateString()))
-      this.appService.setFolder(String(folder.id));
+      this.appService.setCurrentFolder(folder);
       this.appService.searchDocs4();
     }
 
     onDblClick(folder :Folder){
         if (folder.isChildren) {
-            this.appService.setFolder(String(folder.id));
+            this.appService.setCurrentFolder(folder);
             this.appService.searchFolder();
             //this.appService.searchFolderObserver(String(folder.id)).subscribe((val) => {this.folders = val});
             //add items to BreadCramber Array

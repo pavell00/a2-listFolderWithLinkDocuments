@@ -39,8 +39,8 @@ export class AppData implements InMemoryDbService {
           {"fldId":2, "id":7, "docName":"document 7", "dateItem": "14.03.2017"},
           {"fldId":3, "id":3, "docName":"document 3", "dateItem": "03.03.2017"},
           {"fldId":3, "id":8, "docName":"document 8", "dateItem": "20.03.2017"},
-          {"fldId":4, "id":4, "docName":"document 4", "dateItem": "14.03.2017"},
-          {"fldId":7, "id":9, "docName":"document 9", "dateItem": "14.03.2017"}
+          {"fldId":4, "id":4, "docName":"document 4", "dateItem": "22.03.2017"},
+          {"fldId":7, "id":9, "docName":"document 9", "dateItem": "22.03.2017"}
     ];
     let folders = [
           {"id": 1, "name": "folder 1", "isChildren": true, "rootId":0},

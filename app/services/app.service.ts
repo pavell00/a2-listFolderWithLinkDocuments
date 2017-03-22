@@ -11,21 +11,11 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Subject} from 'rxjs/Subject';
 //import {} from 'rxjs';
 
-import {Folder} from '../model/folder'
-import {Document} from '../model/document'
-import {Journal} from '../model/journal'
-import {Entity} from '../model/entity'
-import {BreadCramber} from '../model/breadcramber'
-import {CalendarComponent} from '../components/calendar.component/calendar.component'
-import {FolderComponent} from '../components/folder.component/forlder.component'
+import {Folder, Document, Journal, Entity, BreadCramber} from '../model/index'
 
 @Injectable()
 export class AppService {
 
-  //rootFolder: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  //todo_2: BehaviorSubject<Folder[]> = new BehaviorSubject<Folder[]>([{id:1, name:'default Folder'}]);
-  private currentFolderId: string;
-  private currentFolder: string = "0";
   private docs = new Subject<Document[]>();
   private folders = new Subject<Folder[]>();
   private journals = new Subject<Journal[]>();
@@ -33,21 +23,25 @@ export class AppService {
   private calendar = new BehaviorSubject('NAN');
   private curfld = new BehaviorSubject('0');
 
-  private bcramberSource: Subject<BreadCramber[]> = new Subject<BreadCramber[]>();
+  private bcramberSource = new Subject<BreadCramber[]>();
   bcramberChange$ = this.bcramberSource.asObservable();
+
+  private f:Folder;
+  private currentFolderSource = new Subject<Folder>();
+  currentFolderChange$ = this.currentFolderSource.asObservable().subscribe((res) => {this.f = res});
 
   //private currentFolderSource: BehaviorSubject<string> = new BehaviorSubject<string>("0");
   //currentFolderChange$ = this.currentFolderSource.asObservable();
-
-  private foldersUrl = 'http://192.168.0.101:3004/folders';  // URL to web API
-  private docmentsUrl = 'http://192.168.0.101:3004/documents';  // URL to web API
-  private journalsUrl = 'http://192.168.0.101:3004/journals';  // URL to web API
-  private entitiesUrl = 'http://192.168.0.101:3004/entities';  // URL to web API
+  //Home - http://192.168.0.101
+  private foldersUrl = 'http://172.16.9.2:3004/folders';  // URL to web API
+  private docmentsUrl = 'http://172.16.9.2:3004/documents';  // URL to web API
+  private journalsUrl = 'http://172.16.9.2:3004/journals';  // URL to web API
+  private entitiesUrl = 'http://172.16.9.2:3004/entities';  // URL to web API
   
   constructor(private http: Http, private jsonp: Jsonp) {}
   
-  setFolder(s: string){this.currentFolderId = s;}
-  //setCalendar(s: string){this.calendar = s;}
+  setCurrentFolder(f: Folder){this.currentFolderSource.next(f);}
+  getCurrentFolder(){return this.currentFolderSource;}
   getDocs()   {return this.docs;}
 
   getFolders(): Observable<any> {return this.folders.asObservable();}
@@ -59,7 +53,7 @@ export class AppService {
   setBCramberObserver(b: BreadCramber[]){this.bcramberSource.next(b);}
   
   //setBCramber(s: BreadCramber){this.bcramberSource.push(s);}
-  getBCramber(){return this.bcramberSource;}
+  //getBCramber(){return this.bcramberSource;}
 
   saveDocPromise(d: Document){
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -69,6 +63,15 @@ export class AppService {
         .then(response => response.json())
         .catch(this.handleError)
     this.searchDocs4();
+  }
+
+  saveDoc(d: Document){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.docmentsUrl, JSON.stringify(d), options)
+        .map(response => response.json())
+        .catch(this.handleError)
+    //this.searchDocs4();
   }
 
   updateDocPromise(d: Document){
@@ -97,7 +100,7 @@ export class AppService {
   searchFolder () {
     //console.log(this.currentFolder);
     let params = new URLSearchParams();
-    params.set('rootId', this.currentFolderId);
+    params.set('rootId', String(this.f.id));
     let a = this.http
         .get(this.foldersUrl, { search: params })
         .map(response => <Folder[]> response.json())
@@ -110,7 +113,8 @@ export class AppService {
   }
 
   searchDocs4 () {
-     let term = this.currentFolderId;
+     console.log("curent folder "+ this.f.id);
+     let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
      let params = new URLSearchParams();
      params.set('fldId', term);
@@ -225,7 +229,7 @@ export class AppService {
   }
 
   searchDocs3 () {
-      let term = (this.currentFolderId);
+      let term = String(this.f.id);
       let currentDate = this.calendar.getValue();
       let params = new URLSearchParams();
       params.set('fldId', term);
