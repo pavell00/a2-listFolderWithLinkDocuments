@@ -27,7 +27,7 @@ export class EditDialogComponent implements OnInit {
 
     onOpenDlgNew(){
         this.docIsNew = true;
-        this.document = new Document(1, 0, "test", new Date().toLocaleDateString());
+        this.document = new Document(1, "test", new Date().toLocaleDateString());
         this.displayDialog = true;
     }
 
@@ -35,7 +35,9 @@ export class EditDialogComponent implements OnInit {
 
     save(){
         if (this.docIsNew) {
-            let a = this.appService.saveDoc(this.document);
+            let d = new Document(1, "test", "23.03.2017");
+            let a = this.appService.saveDocPromise(d);
+            //this.appService.saveDoc(d);
             /*a.subscribe(
                 (v) =>  {this.test = v}
             )*/

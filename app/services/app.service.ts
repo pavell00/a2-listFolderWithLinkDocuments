@@ -16,13 +16,13 @@ import {Folder, Document, Journal, Entity, BreadCramber} from '../model/index'
 @Injectable()
 export class AppService {
 
+  private docs2 : Document[] = [];
   private docs = new Subject<Document[]>();
   private folders = new Subject<Folder[]>();
   private journals = new Subject<Journal[]>();
   private entities = new Subject<Entity[]>();
-  private calendar = new BehaviorSubject('NAN');
-  private curfld = new BehaviorSubject('0');
-
+  private calendar = new BehaviorSubject('23.03.2017');
+  
   private bcramberSource = new Subject<BreadCramber[]>();
   bcramberChange$ = this.bcramberSource.asObservable();
 
@@ -42,7 +42,8 @@ export class AppService {
   
   setCurrentFolder(f: Folder){this.currentFolderSource.next(f);}
   getCurrentFolder(){return this.currentFolderSource;}
-  getDocs()   {return this.docs;}
+  getDocs()  {return this.docs;}
+  getDocs2()  {return this.docs2;}
 
   getFolders(): Observable<any> {return this.folders.asObservable();}
   getJournals(){return this.journals;}
@@ -56,28 +57,31 @@ export class AppService {
   //getBCramber(){return this.bcramberSource;}
 
   saveDocPromise(d: Document){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     this.http.post(this.docmentsUrl, JSON.stringify(d), options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
     this.searchDocs4();
+    this.getDocs();
   }
 
   saveDoc(d: Document){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    console.log(JSON.stringify(d));
+    let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.docmentsUrl, JSON.stringify(d), options)
-        .map(response => response.json())
-        .catch(this.handleError)
+    let a = this.http.post(this.docmentsUrl, JSON.stringify(d), options)
+        .map((res:Response) => res.json())
     //this.searchDocs4();
+    //this.searchDocs2();
+    //this.getDocs();
   }
 
   updateDocPromise(d: Document){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    this.http.put(`app/documents/${d['id']}`, JSON.stringify(d), options)
+    this.http.put(`${this.docmentsUrl}/${d['id']}`, JSON.stringify(d), options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
@@ -89,8 +93,8 @@ export class AppService {
     });*/
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    console.log(`app/documents/${id}`);
-    this.http.delete(`app/documents/${id}`, options)
+    console.log(`${this.docmentsUrl}/${id}`);
+    this.http.delete(`${this.docmentsUrl}/${id}`, options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
@@ -113,7 +117,7 @@ export class AppService {
   }
 
   searchDocs4 () {
-     console.log("curent folder "+ this.f.id);
+     //console.log("curent folder "+ this.f.id);
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
      let params = new URLSearchParams();
@@ -124,6 +128,7 @@ export class AppService {
         .map(response => <Document[]> response.json())
             a.subscribe(
                 (val) => {this.docs.next(val);//without filtering
+                          this.docs2 = val;
                 },
                 (err) => (this.handleError)
             )
@@ -201,11 +206,19 @@ export class AppService {
     }
 
   // ??
-  searchDocs2(term : string): Observable<Document[]>  {
-    return this.http
-        .get(`app/documents/?fldId=${1}`)
-        .map(response => response.json().data)
+  searchDocs2()  {
+     let term = "1";
+     let currentDate = this.calendar.getValue();//this.calendar;
+     console.log(term);
+     console.log(currentDate);
+     let params = new URLSearchParams();
+     params.set('fldId', term);
+     params.set('dateItem', currentDate);
+     return this.http
+        .get(this.docmentsUrl)
+        .map(response => response.json())
         .catch(this.handleError);
+     //return a;
       //this.http
       //  .get(`app/documents.json/?fldId=${1}`)
       //  .map((r: Response) => r.json().data as Document[])

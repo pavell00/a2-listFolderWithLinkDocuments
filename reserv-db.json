@@ -228,15 +228,9 @@
     },
     {
       "fldId": 1,
-      "docName": "test",
-      "dateItem": "23.03.2017",
-      "id": 14
-    },
-    {
-      "fldId": 1,
-      "docName": "test",
-      "dateItem": "23.03.2017",
-      "id": 17
+      "id": 10,
+      "docName": "document 10",
+      "dateItem": "23.03.2017"
     }
   ],
   "folders": [

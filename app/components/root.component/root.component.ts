@@ -21,8 +21,8 @@ export class RootComponent implements OnInit {
     constructor(private appService: AppService){ }
 
     ngOnInit(){
-        /*this.appService.getCalendar().subscribe(
-            (v) => {this.sDate = v;}
+       /*this.appService.searchDocs2().subscribe(
+            (v) => {this.error = JSON.stringify(v);}
         )*/
     }
 
