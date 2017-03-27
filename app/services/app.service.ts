@@ -38,11 +38,14 @@ export class AppService {
   private journalsUrl = 'http://172.16.9.2:3004/journals';  // URL to web API
   private entitiesUrl = 'http://172.16.9.2:3004/entities';  // URL to web API
   
+  private headers = new Headers({ 'Content-Type': 'application/json' });
+  private options = new RequestOptions({ headers: this.headers });
+
   constructor(private http: Http, private jsonp: Jsonp) {}
   
   setCurrentFolder(f: Folder){this.currentFolderSource.next(f);}
   getCurrentFolder(){return this.currentFolderSource;}
-  getDocs()  {return this.docs;}
+  getDocs() : Observable<Document[]> {return this.docs;}
   getDocs2()  {return this.docs2;}
 
   getFolders(): Observable<any> {return this.folders.asObservable();}
@@ -57,9 +60,7 @@ export class AppService {
   //getBCramber(){return this.bcramberSource;}
 
   saveDocPromise(d: Document){
-    let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    this.http.post(this.docmentsUrl, JSON.stringify(d), options)
+    this.http.post(this.docmentsUrl, JSON.stringify(d), this.options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
@@ -67,21 +68,14 @@ export class AppService {
     this.getDocs();
   }
 
-  saveDoc(d: Document){
+  saveDoc(d: Document): Observable<Document[]>{
     console.log(JSON.stringify(d));
-    let headers = new Headers({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let a = this.http.post(this.docmentsUrl, JSON.stringify(d), options)
+    return this.http.post(this.docmentsUrl, JSON.stringify(d), this.options)
         .map((res:Response) => res.json())
-    //this.searchDocs4();
-    //this.searchDocs2();
-    //this.getDocs();
   }
 
   updateDocPromise(d: Document){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    this.http.put(`${this.docmentsUrl}/${d['id']}`, JSON.stringify(d), options)
+    this.http.put(`${this.docmentsUrl}/${d['id']}`, JSON.stringify(d), this.options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
@@ -91,14 +85,22 @@ export class AppService {
     /*this.docs.forEach(element => {
          console.log(element)
     });*/
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
     console.log(`${this.docmentsUrl}/${id}`);
-    this.http.delete(`${this.docmentsUrl}/${id}`, options)
+    this.http.delete(`${this.docmentsUrl}/${id}`, this.options)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError)
      this.searchDocs4();
+  }
+
+  delDoc(id: string): Observable<Document[]>{
+    /*this.docs.forEach(element => {
+         console.log(element)
+    });*/
+    //console.log(`${this.docmentsUrl}/${id}`);
+    return this.http.delete(`${this.docmentsUrl}/${id}`, this.options)
+        .map(response => response.json())
+        .catch(this.handleError)
   }
 
   searchFolder () {
@@ -116,7 +118,7 @@ export class AppService {
     //return a;
   }
 
-  searchDocs4 () {
+  searchDocs4(): Observable<Document[]> {
      //console.log("curent folder "+ this.f.id);
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
@@ -128,7 +130,6 @@ export class AppService {
         .map(response => <Document[]> response.json())
             a.subscribe(
                 (val) => {this.docs.next(val);//without filtering
-                          this.docs2 = val;
                 },
                 (err) => (this.handleError)
             )
@@ -189,25 +190,21 @@ export class AppService {
   }
 
   saveFolderPromise(f: Folder){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    this.http.post(this.foldersUrl, JSON.stringify(f), options)
+    this.http.post(this.foldersUrl, JSON.stringify(f), this.options)
         .toPromise()
         .then(response => response.json().data)
         .catch(this.handleError)
   }
 
   saveDocObs(d: Document): Observable<Document>{
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.docmentsUrl, JSON.stringify(d), options)
+    return this.http.post(this.docmentsUrl, JSON.stringify(d), this.options)
         .map(this.extractData)
         .catch(this.handleError);
     }
 
   // ??
-  searchDocs2()  {
-     let term = "1";
+  searchDocs2() : Observable<Document[]> {
+     let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
      console.log(term);
      console.log(currentDate);

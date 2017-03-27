@@ -35,8 +35,11 @@ export class EditDialogComponent implements OnInit {
 
     save(){
         if (this.docIsNew) {
-            let d = new Document(1, "test", "23.03.2017");
-            let a = this.appService.saveDocPromise(d);
+            //let d = new Document(1, "test", "27.03.2017");
+            let a = this.appService.saveDoc(this.document).subscribe(
+                v => {return true;},
+                err => {console.log('error')}
+                )
             //this.appService.saveDoc(d);
             /*a.subscribe(
                 (v) =>  {this.test = v}

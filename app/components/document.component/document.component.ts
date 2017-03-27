@@ -24,11 +24,14 @@ export class DocumentComponent implements OnInit {
     //selectedDocument: Document;
     private docs: Document[];
     private error: any;
-    private test: any
     
     constructor(private appService: AppService) { }
 
     ngOnInit() {
+        this.getAll();
+    }
+
+    getAll(){
         this.appService.getDocs().subscribe(
             (val) => {this.docs = val})
 
@@ -47,7 +50,12 @@ export class DocumentComponent implements OnInit {
         //this.docs.splice(this.findSelectedDocIndex(), 1);
         //console.log(JSON.stringify(this.selectedRow))
         if (this.selectedRow != undefined) {
-            this.appService.deleteDocPromise(String(this.selectedRow.id))
+            this.appService.delDoc(String(this.selectedRow.id)).subscribe(
+                v => {this.getAll();
+                      console.log(JSON.stringify(this.docs));
+                        return true;},
+                err => {console.log('error')}
+                )                
         }
     }
 
