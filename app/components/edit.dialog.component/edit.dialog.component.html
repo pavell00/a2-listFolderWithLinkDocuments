@@ -1,5 +1,6 @@
 <p-dialog header="Document Details" [(visible)]="displayDialog" 
     [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
+    {{i}}
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="document">
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="fldId">Folder ID</label></div>
@@ -20,8 +21,9 @@
     </div>
     <p-footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" pButton icon="fa-close" (click)="close()" label="Close"></button>
-            <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+            <button type="button" pButton icon="fa-close" (click)="close()" label="Close" class="ui-button-danger"></button>
+            <button type="button" pButton icon="fa-save" (click)="save()" label="Save" class="ui-button-success"></button>
+            <button type="button" pButton icon="fa-check" (click)="test()" label="Test" class="ui-button-warning"></button>
         </div>
     </p-footer>
 </p-dialog>

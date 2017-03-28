@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Document, Folder } from '../../model/index';
 //import { EditDialogComponent } from '../edit.dialog.component/edit.dialog.component';
@@ -24,11 +24,16 @@ export class DocumentComponent implements OnInit {
     //selectedDocument: Document;
     private docs: Document[];
     private error: any;
-    
+    counter:number;
+
     constructor(private appService: AppService) { }
 
     ngOnInit() {
         this.getAll();
+        //this.getAll2();
+        this.appService.getCounter().subscribe(
+            (v) => {this.counter = v;}
+        )
     }
 
     getAll(){
@@ -38,6 +43,11 @@ export class DocumentComponent implements OnInit {
         this.documentSelect$.subscribe(
             (v) => {this.document = v;}
         )
+    }
+
+    getAll2(){
+        this.appService.searchDocs2().subscribe(
+            (val) => {console.log(JSON.stringify(val))})
     }
 
     onRowSelect(event: any){
@@ -52,25 +62,8 @@ export class DocumentComponent implements OnInit {
         if (this.selectedRow != undefined) {
             this.appService.delDoc(String(this.selectedRow.id)).subscribe(
                 v => {this.getAll();
-                      console.log(JSON.stringify(this.docs));
-                        return true;},
-                err => {console.log('error')}
-                )                
+                      return true}
+            )
         }
     }
-
-    test_search(){
-      this.appService
-            .search2()
-            .then(docs => this.docs = docs)
-            .catch(error => this.error = error);
-    }
-
-    /*test_searchObservable(){
-      this.appService
-            .searchDocs2("1")
-            .map(docs => this.test = JSON.stringify(docs))
-            .catch(error => this.error = error);
-      console.log(this.test);
-    }*/
 }

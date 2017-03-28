@@ -4,7 +4,7 @@
              (onRowDblclick)="dialog.onOpenDlg()"
              [paginator]="true" rows="15" 
              [responsive]="true">
-    <p-header>Содержимое папки</p-header>
+    <p-header>Содержимое папки {{counter}}</p-header>
     <p-column field="dateItem" header="Дата" [sortable]="true"></p-column>
     <p-column field="docName" header="Наименование" [sortable]="true"></p-column>
     <p-column field="id" header="id" [sortable]="true"></p-column>

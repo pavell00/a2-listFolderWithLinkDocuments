@@ -17,12 +17,11 @@ export class RootComponent implements OnInit {
     error: any;
     bCramb: BreadCramber[] = [];
     
-
     constructor(private appService: AppService){ }
 
     ngOnInit(){
-       /*this.appService.searchDocs2().subscribe(
-            (v) => {this.error = JSON.stringify(v);}
+       /*this.appService.getCounter().subscribe(
+            (v) => {this.counter = v;}
         )*/
     }
 

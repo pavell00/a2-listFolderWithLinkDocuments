@@ -16,7 +16,6 @@ import {Folder, Document, Journal, Entity, BreadCramber} from '../model/index'
 @Injectable()
 export class AppService {
 
-  private docs2 : Document[] = [];
   private docs = new Subject<Document[]>();
   private folders = new Subject<Folder[]>();
   private journals = new Subject<Journal[]>();
@@ -25,6 +24,10 @@ export class AppService {
   
   private bcramberSource = new Subject<BreadCramber[]>();
   bcramberChange$ = this.bcramberSource.asObservable();
+
+  private countSource = new BehaviorSubject<number>(0);
+  getCounter(): Observable<number>{return this.countSource.asObservable();}
+  setCounter(n:number){this.countSource.next(n);}
 
   private f:Folder;
   private currentFolderSource = new Subject<Folder>();
@@ -45,8 +48,13 @@ export class AppService {
   
   setCurrentFolder(f: Folder){this.currentFolderSource.next(f);}
   getCurrentFolder(){return this.currentFolderSource;}
-  getDocs() : Observable<Document[]> {return this.docs;}
-  getDocs2()  {return this.docs2;}
+  //getDocs() : Observable<Document[]> {return this.docs;}
+  getDocs() : Observable<Document[]> {
+      this.searchDocs2().subscribe(
+          v => {this.docs.next(v);}
+      )
+      return this.docs;
+    }
 
   getFolders(): Observable<any> {return this.folders.asObservable();}
   getJournals(){return this.journals;}
@@ -69,9 +77,10 @@ export class AppService {
   }
 
   saveDoc(d: Document): Observable<Document[]>{
-    console.log(JSON.stringify(d));
-    return this.http.post(this.docmentsUrl, JSON.stringify(d), this.options)
-        .map((res:Response) => res.json())
+    //console.log(JSON.stringify(d));
+    let a = this.http.post(this.docmentsUrl, JSON.stringify(d), this.options)
+        .map(response => response.json())
+    return a;
   }
 
   updateDocPromise(d: Document){
@@ -122,6 +131,8 @@ export class AppService {
      //console.log("curent folder "+ this.f.id);
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
+     //console.log('searchDocs4 ' +term);
+     //console.log('searchDocs4 ' +currentDate);
      let params = new URLSearchParams();
      params.set('fldId', term);
      params.set('dateItem', currentDate);
@@ -206,19 +217,15 @@ export class AppService {
   searchDocs2() : Observable<Document[]> {
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
-     console.log(term);
-     console.log(currentDate);
+     console.log('searchDocs2 ' +term);
+     console.log('searchDocs2 ' +currentDate);
      let params = new URLSearchParams();
      params.set('fldId', term);
      params.set('dateItem', currentDate);
      return this.http
-        .get(this.docmentsUrl)
-        .map(response => response.json())
+        .get(this.docmentsUrl, { search: params })
+        .map(response => <Document[]> response.json())
         .catch(this.handleError);
-     //return a;
-      //this.http
-      //  .get(`app/documents.json/?fldId=${1}`)
-      //  .map((r: Response) => r.json().data as Document[])
   }
 
   searchDocs (term: string, currentDate: string) {
