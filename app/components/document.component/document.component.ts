@@ -12,7 +12,7 @@ import {Subject} from 'rxjs/Subject';
 })
 
 export class DocumentComponent implements OnInit {
-    
+
     displayDialog: boolean;
     document: Document;
     documentIsNew: boolean;

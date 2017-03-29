@@ -49,12 +49,14 @@ export class AppService {
   setCurrentFolder(f: Folder){this.currentFolderSource.next(f);}
   getCurrentFolder(){return this.currentFolderSource;}
   //getDocs() : Observable<Document[]> {return this.docs;}
+  
+  setDocs(){this.searchDocs2().subscribe(v => {this.docs.next(v)})}
   getDocs() : Observable<Document[]> {
       this.searchDocs2().subscribe(
           v => {this.docs.next(v);}
       )
       return this.docs;
-    }
+  }
 
   getFolders(): Observable<any> {return this.folders.asObservable();}
   getJournals(){return this.journals;}
@@ -131,8 +133,8 @@ export class AppService {
      //console.log("curent folder "+ this.f.id);
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
-     //console.log('searchDocs4 ' +term);
-     //console.log('searchDocs4 ' +currentDate);
+     console.log('searchDocs4 ' +term);
+     console.log('searchDocs4 ' +currentDate);
      let params = new URLSearchParams();
      params.set('fldId', term);
      params.set('dateItem', currentDate);
@@ -141,6 +143,7 @@ export class AppService {
         .map(response => <Document[]> response.json())
             a.subscribe(
                 (val) => {this.docs.next(val);//without filtering
+                          console.log(JSON.stringify(val))
                 },
                 (err) => (this.handleError)
             )

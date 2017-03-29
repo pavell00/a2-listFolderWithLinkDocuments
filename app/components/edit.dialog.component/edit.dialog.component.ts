@@ -50,6 +50,7 @@ export class EditDialogComponent implements OnInit {
                 err => {console.log('error')}
             )
             //this.appService.saveDocPromise(this.document);
+            this.appService.setDocs();
         } else {
             let a = this.appService.updateDocPromise(this.document);
         }
