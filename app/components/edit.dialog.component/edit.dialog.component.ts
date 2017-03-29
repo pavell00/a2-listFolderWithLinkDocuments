@@ -45,20 +45,11 @@ export class EditDialogComponent implements OnInit {
 
     save(){
         if (this.docIsNew) {
-            //let d = new Document(1, "test", "27.03.2017");
             let a = this.appService.saveDoc(this.document).subscribe(
                 v => {this.getAll2();},
                 err => {console.log('error')}
-                )
-            let f = new Folder(1, "", false, 0);
-            this.appService.setCurrentFolder(f);
-            this.appService.searchDocs4();
-            //this.appService.saveDoc(d);
-            /*a.subscribe(
-                (v) =>  {this.test = v}
-            )*/
-            /*this.appService.getDocs().subscribe(
-                (val) => {console.log(JSON.stringify(val))})*/
+            )
+            //this.appService.saveDocPromise(this.document);
         } else {
             let a = this.appService.updateDocPromise(this.document);
         }
