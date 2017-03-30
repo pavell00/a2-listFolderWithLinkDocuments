@@ -11,15 +11,17 @@
     <p-footer>
         <div class="ui-helper-clearfix" style="width:100%">
             <button type="button" pButton icon="fa-plus" style="float:left" 
-                (click)="dialog.onOpenDlgNew()" label="Add"></button>
+                (click)="dialog.onOpenDlgNew()" label="Add" class="ui-button-info"></button>
             <button type="button" pButton icon="fa-trash" style="float:left" 
                 (click)="onDeleteDoc($event)" label="Delete" class="ui-button-danger"></button>
+            <!--<button type="button" pButton icon="fa-trash" style="float:left" 
+                (click)="onGetDocs()" label="GetDocs" class="ui-button-info"></button>-->
         </div>
     </p-footer>
 </p-dataTable>
 
 <!--<button (click)="dialog.setDialog()">Stop</button>-->
 <!--<button (click)="dialog.onInit(true)">Stop</button>-->
-<editDialog #dialog [document]="document"></editDialog>
+<editDialog #dialog [document]="document" (addDocEvent)="onGetDocs($event)"></editDialog>
 <!--<editDialog [document]="document" [documentIsNew]="documentIsNew"></editDialog>
 {{eror}}-->

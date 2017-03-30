@@ -9,10 +9,10 @@
 
 <div class="ui-g" align="center" *ngIf="checked">
     <div class="ui-g-2 ui-md-2 ui-lg-2">
-        <folder></folder>
+        <folder (myEvent)="doc.onGetDocs($event)"></folder>
     </div>
     <div class="ui-g-4 ui-md-4 ui-lg-4">
-        <document></document>
+        <document #doc></document>
     </div>
     <div class="ui-g-6 ui-md-6 ui-lg-6">
         <journal></journal>
@@ -21,15 +21,15 @@
 
 <div class="ui-g" align="center" *ngIf="!checked">
     <div class="ui-g-2 ui-md-2 ui-lg-2">
-        <folder></folder>
+        <folder (myEvent)="doc.onGetDocs($event)"></folder>
     </div>
     <div class="ui-g-10 ui-md-10 ui-lg-10">
-        <document></document>
+        <document #doc></document>
     </div>
 </div>
 
 <div>
     <entity></entity>    
 </div>
-<!--<button type="button" (click)="addValue()">AddValue</button>-->
-{{error}}
+<!--<button type="button" (click)="addValue()">AddValue</button>
+{{error}}-->

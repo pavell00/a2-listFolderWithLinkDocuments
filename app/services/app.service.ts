@@ -220,8 +220,8 @@ export class AppService {
   searchDocs2() : Observable<Document[]> {
      let term = String(this.f.id);
      let currentDate = this.calendar.getValue();//this.calendar;
-     console.log('searchDocs2 ' +term);
-     console.log('searchDocs2 ' +currentDate);
+//     console.log('searchDocs2 ' +term);
+//     console.log('searchDocs2 ' +currentDate);
      let params = new URLSearchParams();
      params.set('fldId', term);
      params.set('dateItem', currentDate);

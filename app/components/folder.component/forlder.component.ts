@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { Folder, BreadCramber } from '../../model/index';
+import { Folder, BreadCramber, Document } from '../../model/index';
 import { CalendarComponent }  from '../calendar.component/calendar.component';
 import { AppService } from '../../services/app.service';
 
@@ -15,6 +15,9 @@ export class FolderComponent implements OnInit {
     private folders: Folder[];
     private error: any;
     private bcrambFolders: BreadCramber[] = [];
+    documentsOfFooler : Document[];
+
+    @Output() myEvent: EventEmitter<Folder> = new EventEmitter();
 
     constructor(private appService: AppService) { }
 
@@ -26,13 +29,20 @@ export class FolderComponent implements OnInit {
         this.appService.getFolders()
             .subscribe((val) => {this.folders = val});
         //this.appService.getCurfld().subscribe((val) => {this.error = val});
+        this.appService.searchDocs2().subscribe(
+            (v) => {this.documentsOfFooler = v}
+        )        
     }
 
     onSelectFolder(folder :Folder){
       this.selectedFolder = folder;
       //this.appService.searchDocs(String(folder.id), String(this.dateValue.toLocaleDateString()))
       this.appService.setCurrentFolder(folder);
-      this.appService.searchDocs4();
+      this.appService.searchDocs2().subscribe(
+          (v) => {this.documentsOfFooler = v}
+      )
+      this.myEvent.emit(this.selectedFolder);
+      //this.appService.searchDocs4();
     }
 
     onDblClick(folder :Folder){

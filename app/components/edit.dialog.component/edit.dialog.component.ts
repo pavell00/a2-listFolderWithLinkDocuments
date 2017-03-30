@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Document, Folder } from '../../model/index';
 import {AppService} from '../../services/app.service';
@@ -14,20 +14,18 @@ export class EditDialogComponent implements OnInit {
 
     displayDialog: boolean;
     private docIsNew: boolean;
-    i:number = 0;
+
+    @Output() addDocEvent: EventEmitter<Document> = new EventEmitter();
 
     constructor(private appService: AppService) { }
 
     ngOnInit() { }
 
-    test(){
-        this.i++;
-        this.appService.setCounter(this.i);
-    }
-
-    getAll2(){
+    getAll(){
         this.appService.searchDocs2().subscribe(
-            (val) => {console.log(JSON.stringify(val))})
+            (val) => {this.addDocEvent.emit(this.document);
+                      //console.log(JSON.stringify(val))
+                    })
     }
 
     onOpenDlg(){
@@ -46,14 +44,12 @@ export class EditDialogComponent implements OnInit {
     save(){
         if (this.docIsNew) {
             let a = this.appService.saveDoc(this.document).subscribe(
-                v => {this.getAll2();},
+                v => {this.getAll();},
                 err => {console.log('error')}
             )
-            //this.appService.saveDocPromise(this.document);
-            this.appService.setDocs();
         } else {
             let a = this.appService.updateDocPromise(this.document);
         }
-        this.displayDialog = false
+        this.displayDialog = false;
     }
 }

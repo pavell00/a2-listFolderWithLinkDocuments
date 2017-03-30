@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Document, Folder } from '../../model/index';
 //import { EditDialogComponent } from '../edit.dialog.component/edit.dialog.component';
+//import { FolderComponent } from '../folder.component/forlder.component';
 import {AppService} from '../../services/app.service';
 import {Subject} from 'rxjs/Subject';
 
@@ -12,6 +13,8 @@ import {Subject} from 'rxjs/Subject';
 })
 
 export class DocumentComponent implements OnInit {
+
+    //@Input() documents: FolderComponent;
 
     displayDialog: boolean;
     document: Document;
@@ -31,9 +34,6 @@ export class DocumentComponent implements OnInit {
     ngOnInit() {
         this.getAll();
         //this.getAll2();
-        this.appService.getCounter().subscribe(
-            (v) => {this.counter = v;}
-        )
     }
 
     getAll(){
@@ -65,5 +65,12 @@ export class DocumentComponent implements OnInit {
                       return true}
             )
         }
+    }
+
+    onGetDocs(a: any){
+        //console.log(this.documents.documentsOfFooler);
+        //this.docs = this.documents.documentsOfFooler;
+        //console.log(a);
+        this.getAll();
     }
 }
