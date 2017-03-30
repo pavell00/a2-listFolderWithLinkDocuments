@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Document, Folder } from '../../model/index';
+import { Document } from '../../model/index';
 //import { EditDialogComponent } from '../edit.dialog.component/edit.dialog.component';
 //import { FolderComponent } from '../folder.component/forlder.component';
 import {AppService} from '../../services/app.service';

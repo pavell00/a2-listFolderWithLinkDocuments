@@ -25,7 +25,7 @@ export class EditDialogComponent implements OnInit {
         this.appService.searchDocs2().subscribe(
             (val) => {this.addDocEvent.emit(this.document);
                       //console.log(JSON.stringify(val))
-                    })
+                     })
     }
 
     onOpenDlg(){
